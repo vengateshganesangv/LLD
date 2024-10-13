@@ -1,0 +1,141 @@
+SEARCHER  
+    1) ALL USER CAN SEARCH 
+    2) With Filter - (COST, RATING, PayOnDelivery) -> Extendable
+CART:
+    1) ONLY LOGGED USER CAN ADD TO CART
+ORDER:
+    1) ONLY LOGGED USER CAN ADD TO ORDER
+TRACKING ORDER STATUS:
+    1) USER CAN VIEW ORDER STATUS
+CANCEL ORDER:
+    1) ALLOWED TO CANCEL ORDER AT PARTICULAR STAGE
+NOTIFICATION:
+    1) Multiple Notification
+THINK ABOUT ALL THE USING PERSPECTIVE
+
+DB Design:
+    1)  site_user
+            id (INT, PK)
+            email_address (VARCHAR(350))
+            phone_number (VARCHAR(20))
+            password (VARCHAR(500))
+
+    2)  address
+
+            id (INT, PK)
+            unit_number (VARCHAR(20))
+            street_number (VARCHAR(20))
+            address_line1 (VARCHAR(500))
+            address_line2 (VARCHAR(500))
+            city (VARCHAR(200))
+            region (VARCHAR(200))
+            postal_code (VARCHAR(20))
+            country_id (INT, FK to country)
+
+    3) user_address
+
+            user_id (INT, FK to site_user)
+            address_id (INT, FK to address)
+            is_default (INT) 
+
+    4)  product
+
+            id (INT, PK)
+            category_id (INT, FK to product_category)
+            name (VARCHAR(500))
+            description (VARCHAR(4000))
+            product_image (VARCHAR(1000))
+
+    
+    5)  product_category
+
+            id (INT, PK)
+            parent_category_id (INT, FK to product_category)
+            category_name (VARCHAR(200))
+
+    6)  product_variant
+
+            id (INT, PK)
+            product_id (INT, FK to product)
+            sku (VARCHAR(20))
+            price (DECIMAL(10,2))
+            qty_in_stock (INT)
+            product_image (VARCHAR(1000))
+    
+    7)  product_attribute
+
+            id (INT, PK)
+            name (VARCHAR(50))
+
+    8)  product_attribute_value
+
+            id (INT, PK)
+            attribute_id (INT, FK to product_attribute)
+            value (VARCHAR(50))
+
+    9)  product_variant_attribute
+
+            variant_id (INT, FK to product_variant)
+            attribute_value_id (INT, FK to product_attribute_value)
+    
+    10) shopping_cart
+
+            id (INT, PK)
+            user_id (INT, FK to site_user)
+
+    11) shopping_cart_item (modified)
+
+            id (INT, PK)
+            cart_id (INT, FK to shopping_cart)
+            product_variant_id (INT, FK to product_variant) [MODIFIED]
+            qty (INT)
+    
+    12) shop_order (modified)
+
+            id (INT, PK)
+            user_id (INT, FK to site_user)
+            order_date (DATETIME)
+            payment_method_id (INT, FK to user_payment_method)
+            shipping_address (INT, FK to address)
+            shipping_method (INT, FK to shipping_method)
+            order_total (INT)
+            order_status (INT, FK to order_status)
+            coupon_id (INT, FK to coupon) [NEW]
+
+
+    13) order_line (modified)
+
+            id (INT, PK)
+            product_variant_id (INT, FK to product_variant) [MODIFIED]
+            order_id (INT, FK to shop_order)
+            qty (INT)
+            price (INT)
+
+    14) user_payment_method
+
+            id (INT, PK)
+            user_id (INT, FK to site_user)
+            payment_type_id (INT, FK to payment_type)
+            provider (VARCHAR(100))
+            account_number (VARCHAR(50))
+            expiry_date (DATE)
+            is_default (INT) 
+
+SEARCHER:
+    Request(productName: str, filter_detaisl: FilterDetails ) -> Response([Product])
+    
+    FilterDetails - price_filter,rating_filter, payOnDelFilter
+
+    Think About Chain Of Responsibility 
+
+    Chain Of Responsibility - Each class have thier own function + point to the next function
+
+PERMISSION FACTORY:
+    Each Functionality can have different kind of permission so to keep it in central place and also for each function call we can have seperate DB query as well
+
+ADD TO CART:
+    Request(user: User, cart_id: int) -> Response(None)
+    Cart Manager Take Care of Cart Logic
+
+UPDATE ORDER STATUS:
+    Request(order_id, new_status, details) -> Response(order)

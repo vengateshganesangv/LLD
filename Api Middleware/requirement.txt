@@ -1,0 +1,16 @@
+Design A middleware that need to take care of Authentication,Authorisation and Validation 
+
+Before Streaming video played, middleware has to take care of all the above validation functions
+
+In Future for different api this number of middleware gets differ
+
+Top To Bottom Approach:
+
+2) From API Level:
+
+    Request(Header, Body, token) - Response(Body, status)
+
+3) Main Class For Streaming video - VideoManager (In The Video Manager - API Validation Has to take place)
+4) First validation Check -> Authentication Check -> Authorisaton check
+5) Authentication need to aware of token manager
+6) Authorisation need to aware of user manager 

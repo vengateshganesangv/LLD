@@ -1,0 +1,7 @@
+DESIGN CACHE:
+
+1) API VIEW:
+    1) GET - Request(key), Response(value)
+    2) PUT - Request(key, value), Response(None|value)
+2) LRU Cache - Cache have 2 common operation get and put 
+    

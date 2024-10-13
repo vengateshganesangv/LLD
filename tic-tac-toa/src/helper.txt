@@ -1,0 +1,20 @@
+Requirement:
+    1) Play Tic-Tac-Toa Game
+    2) Player is Human Alone - In future it can extend
+    3) In future modification of Tic-Tac-Toa May Come it need to support
+10K FT View:
+    1) display Board.
+    2) Player Can Make Move on the Board - Human Player or Computer Player
+    3) TicTacToa Board.
+    4) TicTacToa Game.
+Object:
+    1) TicTacToa Game
+    2) Player
+    3) Human Player
+    4) Board
+    5) TicTacToa Board
+    6) Move
+
+display board - Request() -> Response<Board>
+Apply Move - Request(x, y, mark) -> Response()
+Make Move - Request(board) -> Response(x,y,mark)

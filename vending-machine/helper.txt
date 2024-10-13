@@ -1,0 +1,44 @@
+Design Vending Machine
+
+Requirements:
+    1) Need to show the list of all the products.
+    2) when customer click a product, it need to ask for amount (Just money type purchase is enough)
+    3) when customer enter amount, it dispatched the product and the remaining amount.
+
+10k FT View:
+    Customer See the list Of Product - ShowProduct - Request-> () - Response -> [Product]
+    Add Item To Cart - Request-> [{id,qty}] - Response->(Total_Amount)
+    Read Amount - Request -> (1,amount) - Response -> For SUCCESS (Order) For Failure Error
+    Product Dispencing - Request(order_id) -> Response [Product]
+    Amount Dispencing - Request(order_id) -> Response (amount)
+
+ENTITY:
+    product
+        1) id  - PK
+        2) name 
+        3) qty_available
+        4) price
+    transaction
+        1) id - PK
+        2) status - PROCESSING, SUCCESS, FAILED
+    cart
+        1) id - PK
+        2) transaction_id  - FK Reference to the purchaser id Primary Key - many to many
+        3) product_id -  FK Reference to the product id Primary Key - many to many
+        4) qty
+        5) price
+    order_line:
+        1) id
+        2) product_id
+        3) shop_order_id
+        4) price
+        5) qty
+    shop_order
+        1) id
+        2) transaction_id
+        3) order_total
+        4) amount_added
+        5) amount_refunded
+    machine
+        1) id
+        2) state -> READY, PRODUCT_DISPLAY, PRODUCT_DETAILS_READING

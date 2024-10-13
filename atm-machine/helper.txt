@@ -1,0 +1,48 @@
+[Ready] ---> [Card Reading] ---> [Withdrawal Details Reading] ---> [Cash Dispensing] ---> [Card Ejecting] ---> [Ready]
+  ^                                                                                             |
+  |                                                                                             |
+  +---------------------------------------------------------------------------------------------+
+
+
+  [Ready State]
+  Allowed Actions:
+  - init() -> Transitions to Card Reading State
+
+  |
+  v
+
+[Card Reading State]
+  Allowed Actions:
+  - readCard(cardDetails) -> Transitions to Withdrawal Details Reading State if successful
+                             Transitions back to Ready State if unsuccessful
+  - cancelTransaction(transId) -> Transitions back to Ready State
+
+  |
+  v
+
+[Withdrawal Details Reading State]
+  Allowed Actions:
+  - readWithdrawalDetails(cardDetails, transId, amount) 
+      -> Transitions to Cash Dispensing State if approved
+      -> Transitions to Card Ejecting State if not approved
+  - cancelTransaction(transId) -> Transitions to Card Ejecting State
+
+  |
+  v
+
+[Cash Dispensing State]
+  Allowed Actions:
+  - dispenseCash(transId) -> Transitions to Card Ejecting State
+  - cancelTransaction(transId) -> Transitions to Card Ejecting State
+
+  |
+  v
+
+[Card Ejecting State]
+  Allowed Actions:
+  - ejectCard() -> Transitions back to Ready State
+
+  |
+  v
+
+[Ready State]

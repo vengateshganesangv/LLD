@@ -1,0 +1,25 @@
+Applied Strategy Design Pattern
+Applied Factory Design Pattern
+
+
+LLD APPROACH:
+PARKING LOT:
+
+FIND_PARKING_SPOT:
+
+REQUEST(entry_point: EntryPoint, vechicle_type) -> Response<PARKING_SPOT>
+
+GET_TICKET:
+
+REQUEST(PARKING_SPOT, VEHICLE) -> Response(TICKET)
+
+GET_PARKING_FEE:
+
+REQUEST(TICKET) -> Response(INT)
+
+PAY_PARKING_FEE:
+REQUEST(paymentMode, payment_details) -> Response()
+
+
+
+CONTROLLER -> SERVICE_LAYER -> REPOSITORY_LAYER <-> DATA
