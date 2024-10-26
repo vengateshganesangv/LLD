@@ -10,9 +10,8 @@ class SearchProductAPI:
         self.product_searcher = product_searcher
 
     def search(self, product_name: str, filter_details: FilterDetails, user: User) -> list[Product]:
-        # Functionality whether User Has Permission to search or not
-        # To Perform Search Option
-        permission = PermissionFactory.get_search_permission(user)
+        # Functionality whether User Has Permission to search or not To Perform Search Option
+        permission = PermissionFactory().get_search_permission(user)
         if not permission.is_permitted():
             raise RuntimeError("Request not allowed")
         return self.product_searcher.search_products(product_name, filter_details)
